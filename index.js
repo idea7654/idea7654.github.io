@@ -117,8 +117,8 @@ function set_key(evt) {
     var clientX = evt.touches[0].clientX;
     var clientY = evt.touches[0].clientY;
 
-    if(clientX < 100){key.l = 1;}
-    if(clientX > 500){key.r = 1;}
-    if(clientX > 100 && clientX < 500 && clientY < 300){key.u = 1;}
-    if(clientX > 100 && clientX < 500 && clientY > 300){key.d = 1;}
+    if(clientX < 100){r_left = 1;}
+    if(clientX > 500){r_right = 1;}
+    if(clientX > 100 && clientX < 500 && clientY < 300){r_up = 1;}
+    if(clientX > 100 && clientX < 500 && clientY > 300){r_down = 1;}
 }
