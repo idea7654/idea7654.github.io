@@ -100,6 +100,7 @@ function gameLoop() {
 
 function init() {
     vcanvas = document.getElementById("myCanvas");
+    document.ontouchstart = set_key;
     ctx = vcanvas.getContext("2d");
 
     s = new Snake();
@@ -110,15 +111,14 @@ function init() {
 
 // key control
 
-function set_key() {
+function set_key(evt) {
     r_left = r_right = r_up = r_down = 0;
 
-    if (event.keyCode === 37) { r_left = 1; }
-    if (event.keyCode === 39) { r_right = 1; }
-    if (event.keyCode === 38) { r_up = 1; }
-    if (event.keyCode === 40) { r_down = 1; }
+    var clientX = evt.touches[0].clientX;
+    var clientY = evt.touches[0].clientY;
 
-    if (event.keyCode === 32) { sp = 1; }
+    if(clientX < 100){key.l = 1;}
+    if(clientX > 500){key.r = 1;}
+    if(clientX > 100 && clientX < 500 && clientY < 300){key.u = 1;}
+    if(clientX > 100 && clientX < 500 && clientY > 300){key.d = 1;}
 }
-
-document.onkeydown = set_key;
