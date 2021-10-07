@@ -180,6 +180,46 @@ Bgm은 평활운 느낌으로 나무가 흔들리는 소리나 새가 지저귀�
 ### 2) 오브젝트 이름: PlayerPawn : SCharacter(Extends)
 |속성|영문명칭|설명|
 |------|---|---|
+|CollisionSylinder|CapsuleComponent|충돌을 담당하는 Capsule모양의 컴포넌트. RootComponent로 설정|
+|Arrow|ArrowComponent|오브젝트가 바라보는 방향|
+|CharacterMesh0|Mesh|캐릭터의 Mesh를 설정|
+|SpringArmComp|Spring ArmComp|캐릭터의 Spring Arm 컴포넌트|
+|CameraComp|Camera Comp|캐릭터에 빙의했을 때 플레이어가 보게 될 기준 카메라|
+  
+### 3) 오브젝트 이름: LoginWidget / WBP_Login
+|속성|영문명칭|설명|
+|------|---|---|
+|ClientSocket|Socket|소켓 클래스의 싱글턴 객체|
+|UEditableTextBox|Email|이메일 Input Component(WBP_Login에 바인딩)|
+|UEditableTextBox|Password|패스워드 Input Component(이하 동일)|
+|UButton|LoginButton|로그인 버튼|
+|UButton|RegisterButton|회원가입 버튼|
+|UEditableTextBox|NotifyUI|로그인, 회원가입 에러시 보여지게 될 알림텍스트|
+|UWidgetAnimation|Notification_Anim|NotifyUI의 애니메이션|
+|UEditableTextBox|Nickname|회원가입 시 닉네임 Input Component|
+  
+### 4) 오브젝트 이름: InGameWidget / WBP_Crosshair
+|속성|영문명칭|설명|
+|------|---|---|
+|UEditableTextBox|Interact|Interaction이 발생했을 때 생길 텍스트박스|
+|UWidgetAnimation|Notify_Interact|Interact의 애니메이션|
+  
+### 5) 오브젝트 이름: SWeapon
+|속성|영문명칭|설명|
+|------|---|---|
+|USkeletalMeshComponent|MeshComp|SWeapon에 부착될 Mesh 컴포넌트|
+|TSubclassOf<UDamageType>|DamageType 데미지 타입. UE4에서 미리 정의되어있음|
+|FName|MuzzleSocketName|총알이 발사되는 지점의 소켓이름|
+|UParticleSystem|MuzzleEffect|총구에서 생성되는 총알 발사 이펙트|
+|UParticleSystem|DefaultImpactEffect|총알이 플레이어를 제외한 오브젝트에 부딪혔을 때 재생될 이펙트|
+|UParticleSystem|FleshImpactEffect|총알이 플레이어의 머리에 충돌했을 때 재생 될 이펙트|
+|UParticleSystem|TracerEffect|총알이 나가는 궤적을 그리는 이펙트|
+|TSubclassOf<UCameraShakeBase>|FireCamShake|총알을 발사할 때 Shake를 줄 Shake객체(BP에서 설정이므로 명시적 선언)|
+|float|BaseDamage|무기의 기본데미지|
+|FTimerHandle|TimerHandle_TimeBetweenShots|연사를 할 때 일정 간격을 두도록 설정하는 Timer의 핸들|
+|float|LastFireTime|마지막으로 총알을 발사한 시간|
+|float|RateOfFire|연사에서 총알이 발사될 비율|
+|float|TimeBetweenShots|60 / RateOfFire의 값|
 ## 3. 행동
 
 ## 4. 상태
