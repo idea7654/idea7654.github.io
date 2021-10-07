@@ -208,7 +208,7 @@ Bgm은 평활운 느낌으로 나무가 흔들리는 소리나 새가 지저귀�
 |속성|영문명칭|설명|
 |------|---|---|
 |USkeletalMeshComponent|MeshComp|SWeapon에 부착될 Mesh 컴포넌트|
-|TSubclassOf<UDamageType>|DamageType 데미지 타입. UE4에서 미리 정의되어있음|
+|TSubclassOf<UDamageType>|DamageType|데미지 타입. UE4에서 미리 정의되어있음|
 |FName|MuzzleSocketName|총알이 발사되는 지점의 소켓이름|
 |UParticleSystem|MuzzleEffect|총구에서 생성되는 총알 발사 이펙트|
 |UParticleSystem|DefaultImpactEffect|총알이 플레이어를 제외한 오브젝트에 부딪혔을 때 재생될 이펙트|
@@ -220,6 +220,10 @@ Bgm은 평활운 느낌으로 나무가 흔들리는 소리나 새가 지저귀�
 |float|LastFireTime|마지막으로 총알을 발사한 시간|
 |float|RateOfFire|연사에서 총알이 발사될 비율|
 |float|TimeBetweenShots|60 / RateOfFire의 값|
+  
+### 6) 오브젝트 이름: ClientSocket
+|속성|영문명칭|설명|
+|------|---|---|
 ## 3. 행동
 
 ## 4. 상태
