@@ -154,8 +154,28 @@ Bgm은 평활운 느낌으로 나무가 흔들리는 소리나 새가 지저귀�
 ### 1) 오브젝트 이름: SCharacter
 |속성|영문명칭|설명|
 |------|---|---|
-|UCameraComponent|CameraComp|플레이어에 부착된 카메라 컴포넌트
-|USpringArmComponent|SpringArmComp|플레이어에 부착된 스프링암 컴포넌트
+|UCameraComponent|CameraComp|플레이어에 부착된 카메라 컴포넌트|
+|USpringArmComponent|SpringArmComp|플레이어에 부착된 스프링암 컴포넌트|
+|bool|bDied|플레이어가 죽었는지 체크|
+|TSubclassOf<UUserWidget>|GameUI|인게임 UI 객체|
+|bool|bWantsToZoom|총기를 들고 있을 시, 줌(확대)를 할 것인지 체크|
+|bool|isInteract|플레이어가 맵의 오브젝트와 Interact를 했는지 체크|
+|float|ZoomFOV|줌을 할때랑 줌을 풀 때 바뀌는 FOV값|
+|float|DefaultFOV|줌을 안할 때의 평소 FOV값|
+|bool|isJump|플레이어가 점프를 했는지 체크, 점프 가능할 때 1프레임만 true상태가 됨|
+|bool|CurrentCrouch|플레이어가 Crouch를 한 상태인지 체크|
+|bool|isCrouch|CurrentCrouch와 같은지 체크, 같지 않다면 Move패킷을 보내고 CurrentCrouch값을 복사할당|
+|ASWeapon|CurrentWeapon|현재 플레이어가 들고 있는 무기|
+|ASWeapon|DetectedWeapon|플레이어가 매 프레임 Raycast를 쏘며 발견한 무기|
+|float|CurrentMFV|플레이어의 MoveFront값, 입력에 따라 변함(PlayerInputComponent)|
+|float|CurrentMRV|플레이어의 MoveRight값, 입력에 따라 변함(PlayerInputComponent)|
+|float|MFV|CurrentMFV와 같은지 체크, 같지 않다면 Move패킷을 보내고 CurrentMFV값을 복사할당|
+|float|MRV|CurrentMRV와 같은지 체크, 같지 않다면 Move패킷을 보내고 CurrentMRV값을 복사할당|
+|float|TurnSpeed|플레이어가 회전하고 있는 방향을 나타냄.(-1, 0, 1)|
+|float|TurnSpeedLast|TurnSpeed와 같은지 체크, 같지 않다면 Move패킷을 보내고 TurnSpeed값을 복사할당|
+|bool|hasGun|플레이어가 총을 갖고 있는지 체크|
+|FName|WeaponAttach|SocketName 플레이어 Mesh에 총을 붙일 위치의 이름|
+|ClientSocket|Socket|소켓 클래스의 싱글턴 객체|
 ## 3. 행동
 
 ## 4. 상태
