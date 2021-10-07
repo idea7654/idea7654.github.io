@@ -176,6 +176,10 @@ Bgm은 평활운 느낌으로 나무가 흔들리는 소리나 새가 지저귀�
 |bool|hasGun|플레이어가 총을 갖고 있는지 체크|
 |FName|WeaponAttach|SocketName 플레이어 Mesh에 총을 붙일 위치의 이름|
 |ClientSocket|Socket|소켓 클래스의 싱글턴 객체|
+  
+### 2) 오브젝트 이름: PlayerPawn : SCharacter(Extends)
+|속성|영문명칭|설명|
+|------|---|---|
 ## 3. 행동
 
 ## 4. 상태
