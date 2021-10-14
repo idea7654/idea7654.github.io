@@ -152,8 +152,8 @@ Bgm은 평활운 느낌으로 나무가 흔들리는 소리나 새가 지저귀�
 
 ## 2. 파라미터
 ### 1) 오브젝트 이름: SCharacter
-속성|영문명칭|설명
 
+속성|영문명칭|설명
 ---|---|---
 UCameraComponent|CameraComp|플레이어에 부착된 카메라 컴포넌트
 |USpringArmComponent|SpringArmComp|플레이어에 부착된 스프링암 컴포넌트|
@@ -179,6 +179,7 @@ UCameraComponent|CameraComp|플레이어에 부착된 카메라 컴포넌트
 |ClientSocket|Socket|소켓 클래스의 싱글턴 객체|
   
 ### 2) 오브젝트 이름: PlayerPawn : SCharacter(Extends)
+  
 |속성|영문명칭|설명|
 |------|---|---|
 |CollisionSylinder|CapsuleComponent|충돌을 담당하는 Capsule모양의 컴포넌트. RootComponent로 설정|
@@ -188,6 +189,7 @@ UCameraComponent|CameraComp|플레이어에 부착된 카메라 컴포넌트
 |CameraComp|Camera Comp|캐릭터에 빙의했을 때 플레이어가 보게 될 기준 카메라|
   
 ### 3) 오브젝트 이름: LoginWidget / WBP_Login
+  
 |속성|영문명칭|설명|
 |------|---|---|
 |ClientSocket|Socket|소켓 클래스의 싱글턴 객체|
@@ -200,12 +202,14 @@ UCameraComponent|CameraComp|플레이어에 부착된 카메라 컴포넌트
 |UEditableTextBox|Nickname|회원가입 시 닉네임 Input Component|
   
 ### 4) 오브젝트 이름: InGameWidget / WBP_Crosshair
+  
 |속성|영문명칭|설명|
 |------|---|---|
 |UEditableTextBox|Interact|Interaction이 발생했을 때 생길 텍스트박스|
 |UWidgetAnimation|Notify_Interact|Interact의 애니메이션|
   
 ### 5) 오브젝트 이름: SWeapon
+  
 |속성|영문명칭|설명|
 |------|---|---|
 |USkeletalMeshComponent|MeshComp|SWeapon에 부착될 Mesh 컴포넌트|
@@ -223,6 +227,7 @@ UCameraComponent|CameraComp|플레이어에 부착된 카메라 컴포넌트
 |float|TimeBetweenShots|60 / RateOfFire의 값|
   
 ### 6) 오브젝트 이름: ClientSocket
+  
 |속성|영문명칭|설명|
 |------|---|---|
 ## 3. 행동
