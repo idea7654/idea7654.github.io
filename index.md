@@ -230,11 +230,138 @@ Bgm은 평활운 느낌으로 나무가 흔들리는 소리나 새가 지저귀�
   
 |속성|영문명칭|설명|
 |------|---|---|
+|FRunnableThread|Thread|GameThread와 별개로 실행할 Thread객체|
+|FThreadSafeCounter|StopTaskCounter|Thread가 안전하게 종료될 수 있게 관리하는 객체|
+|bool|isLoginError|로그인에러 체크|
+|bool|isMatching|매칭이 되어 게임이 시작되었는지 체크|
+|bool|isStart|게임이 시작되었는지 체크|
+|std::string|Nickname|플레이어의 닉네임|
+|std::queue<const Message*>|MessageQueue|Flatbuffer를 통해 받은 패킷을 GameThread에서 사용할 수 있도록 관리하는 큐|
+|std::mutex|QueueMutex|MessageQueue를 Thread-Safe하게 사용하기 위한 Mutex객체|
+|TArray<TSharedPtr<sCharacter>>|players|player의 정보를 담고 있는 구조체인 sCharacter(Unreal Object가 아닌 커스텀 구조체)의 배열|
+|TArray<TSharedPtr<Gun>>|Guns|Gun의 정보를 담고 있는 구조체의 배열|
+|char[]|mReadBuffer|수신버퍼|
+|char[]|mWriteBuffer|송신버퍼|
+|SOCKET|mSocket|윈도우 Socket객체|
+|SOCKADDR_IN|mServerInfo|송/수신을 받을 서버의 정보객체|
+|WSADATA|mWsaData|소켓 통신에 필요한 WSADATA구조체 객체|
+|int32|mPacketNumber|패킷의 번호|
+  
+### 7) 오브젝트 이름: BPlayerController/BP_PlayerController
+  
+|속성|영문명칭|설명|
+|------|---|---|
+|TSubclassOf<ACharacter>|WhoToSpawn|게임 시작할 때 생성할 다른 플레이어들의 클래스객체(BP로 확장 후 BP에서 설정)|
+|TSubclassOf<ASWeapon>|GunSpawn|게임 시작할 때 생성할 무기의 클래스객체(위와 같음)|
+|FName|LevelName|현재의 레벨이름|
+|ASCharacter|SpawnedCharacter|생성된 자신 캐릭터의 정보|
+|FTimerHandle|Timer|세션연장 패킷을 보낼 타이머의 핸들|
+|TArray<ASCharacter*>|Characters|게임의 모든 플레이어들(Room안의)을 관리하는 배열|
+|TArray<ASWeapon*>|Guns|게임의 모든 총들을 관리하는 배열|
+|ASWeapon|TargetGun|다른 유저가 총을 획득했을 때 대상이 되는 총의 정보|
+|ClientSocket|Socket|클라이언트 소켓의 싱글턴 객체|
+  
 ## 3. 행동
+### 1) 오브젝트 이름: SCharacter/PlayerPawn
+  
+|행동|설명|
+|------|---|
+|MoveForward()|플레이어가 바라보는 방향으로 앞/뒤로 움직임|
+|MoveRight()|플레이어가 바라보는 방향에서 좌/우로 움직임|
+|RotateYaw()|카메라의 Yaw회전|
+|RotatePitch()|카메라의 Pitch회전|
+|BeginCrouch()|플레이어 앉기|
+|EndCrouch()|Crouch해제(다시 서기)|
+|BeginZoom()|총을 들고 있을 시, 오른쪽 마우스 입력을 받아 카메라 줌|
+|EndZoom()|줌 해제|
+|JumpFunc()|플레이어 점프|
+|StartFire()|총을 들고 있을 시, 발사|
+|StopFire()|발사 중일 시, 멈춤|
+|CheckMove()|플레이어가 움직였는지 체크(서버로 보낼 목적)|
+|Interact()|맵에 설치된 오브젝트들과 인터렉션|
+|Action()|플레이어가 액션으로 상대방을 공격|
+
+### 2) 오브젝트 이름: LoginWidget / WBP_Login
+  
+|행동|설명|
+|------|---|
+|OnClickedLogin()|로그인 버튼을 눌렀을 때 발생하는 이벤트|
+|LoginError()|로그인 에러가 발생했을 때 발생하는 이벤트|
+  
+### 3) 오브젝트 이름: InGameWidget/WBP_Crosshair
+  
+|행동|설명|
+|------|---|
+|ShowInteractText()|인터렉션 가능한 상황에 텍스트를 보여줌|
+  
+### 4) 오브젝트 이름: SWeapon
+  
+|행동|설명|
+|------|---|
+|PlayFireEffects()|발사 이펙트를 재생|
+|Fire()|발사하는 함수|
+|StartFire()|발사 시작하는 함수(연발)|
+|StopFire()|발사 중지하는 함수(연발)|
+  
+### 5) 오브젝트 이름: ClientSocket
+  
+|행동|설명|
+|------|---|
+|ClientSocket()|생성자|
+|Init()|소켓 생성자|
+|Run()|RecvFrom을 새 쓰레드에서 실행|
+|Stop()|쓰레드 멈춤|
+|Exit()|쓰레드 탈출|
+|StartListen()|쓰레드 생성|
+|StopListen()|쓰레드 파괴|
+|GetSingleton()|해당 클래스에 대한 싱글턴 객체 반환|
+|Begin()|소켓 초기설정|
+|Bind()|소켓 바인딩|
+|RecvFrom()|패킷을 받음|
+|WriteTo()|패킷을 보냄|
+|CloseSocket()|소켓을 닫음|
+|GetSocket|소켓이 있는지 확인|
+|ResetTimeSession()|세션연장 패킷을 보냄|
+|WRITE_PU_C2S_REQUEST_LOGIN()|로그인 요청을 보내는 패킷을 만듬|
+|WRITE_PU_C2S_START_MATCHING()|게임 매칭 요청을 보내는 패킷을 만듬|
+|WRITE_PU_C2S_CANCEL_MATCHING()|게임 매칭 취소 요청을 보내는 패킷을 만듬|
+|WRITE_PU_C2S_EXTEND_SESSION()|세션 연장 패킷을 만듬|
+|WRITE_PU_C2S_MOVE()|플레이어가 움직일 때 움직임 패킷을 만듬|
+|WRITE_PU_C2S_PICKUP_GUN|플레이어가 총을 집었을 때의 패킷을 만듬|
+|WRITE_PU_C2S_SHOOT|플레이어가 총을 발사했을 때의 패킷을 만듬|
+
+### 6) 오브젝트 이름: BPlayerController / BP_PlayerController
+  
+|행동|설명|
+|------|---|
+|SetPlayers()|플레이어들을 레벨에 배치|
+|ResetSessionTime()|세션 연장 함수|
+|GetPacket()|패킷을 ClientSocket에서 받아옴|
+|GameStart()|게임 시작할 때 발생하는 함수|
 
 ## 4. 상태
+### 1) 오브젝트 이름: SCharacter
+  
+|현상태|전이상태|전이조건|
+|------|---|---|
+|Idle|Jump|Space Bar|
+|Idle|Jog|Speed > 10|
+|Idle|Crouch|Ctrl|
+|Idle|Zoom|Mouse Right|
+|Idle|Shoot|Mouse Left|
+|Idle|Run Jump|Space Bar & Speed > 10|
+|Idle|hasGun|Get Gun|
 
 ## 5. 게임의 규칙
+### 1) 핵심 규칙
+1. 다른 플레이어의 총알에 맞거나 액션에 맞으면 체력이 닳음.
+2. 체력이 0이하가 되면 죽음.
+3. 살아남은 사람이 나 혼자가 되면 승리.
+  
+### 2) 보조 규칙
+1. 맵에 있을 수 있는 크기가 점점 좁아짐
+2. 회복 오브젝트와의 Interaction을 통해 체력을 회복할 수 있음.
+3. 죽게 되면 로비로 즉시 나갈 수 있음.
 
 ## 6. 게임에서 사용될 공식
 
