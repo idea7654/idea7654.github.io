@@ -51,7 +51,7 @@
 
 # [대표 이미지]
 
-![그림](https://hclass.pcu.ac.kr:8888/2021b/project/w02/%EB%8C%80%ED%91%9C%EC%9D%B4%EB%AF%B8%EC%A7%80/%EC%98%A4%EC%8A%B9%EB%AC%B5.jpg)
+<img src="./resource/title.jpg">
 
 <br><br>
 
