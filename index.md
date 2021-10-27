@@ -495,4 +495,7 @@ Bgm은 평활운 느낌으로 나무가 흔들리는 소리나 새가 지저귀�
 <br><br>
 
 # [개발 작업]
-ㅁㄴㅇㄹ
+
+<img src="./resource/ProcessPlan.png">
+  
+<br><br>
