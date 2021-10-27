@@ -181,7 +181,13 @@ Bgm은 평활운 느낌으로 나무가 흔들리는 소리나 새가 지저귀�
 |float|TurnSpeed|플레이어가 회전하고 있는 방향을 나타냄.(-1, 0, 1)|
 |float|TurnSpeedLast|TurnSpeed와 같은지 체크, 같지 않다면 Move패킷을 보내고 TurnSpeed값을 복사할당|
 |bool|hasGun|플레이어가 총을 갖고 있는지 체크|
-|FName|WeaponAttach|SocketName 플레이어 Mesh에 총을 붙일 위치의 이름|
+|FName|WeaponAttachSocketName|SocketName 플레이어 Mesh에 총을 붙일 위치의 이름|
+|float|HealthAmount|플레이어 체력|
+|int|CurrentCombo|현재 캐릭터의 근접공격 콤보 단계|
+|int|MaxCombo|캐릭터의 최대 근접공격 콤보|
+|int|Bullet|캐릭터의 총알개수|
+|UAnimMontage*|HitReactMontage|공격받았을 때 재생할 애니메이션 몽타주|
+|TSubclassOf<UCameraShakeBase>|MeleeCamShake|근접 공격을 했을 때 카메라를 흔들 객체|
 |ClientSocket|Socket|소켓 클래스의 싱글턴 객체|
   
 ### 2) 오브젝트 이름: PlayerPawn : SCharacter(Extends)
@@ -211,8 +217,18 @@ Bgm은 평활운 느낌으로 나무가 흔들리는 소리나 새가 지저귀�
   
 |속성|영문명칭|설명|
 |------|---|---|
-|UEditableTextBox|Interact|Interaction이 발생했을 때 생길 텍스트박스|
-|UWidgetAnimation|Notify_Interact|Interact의 애니메이션|
+|UEditableTextBox*|Interact|Interaction이 발생했을 때 생길 텍스트박스|
+|UWidgetAnimation*|Notify_Interact|Interact의 애니메이션|
+|UProgressBar*|ProgressBar_HP|HP바|
+|UImage*|GameOver|게임오버를 나타내는 이미지|
+|UWidgetAnimation*|GameOverAnim|게임오버 이미지를 나타내는 애니메이션|
+|UImage*|Victory|승리를 나타내는 이미지|
+|UWidgetAnimation*|VictoryAnim|승리 이미지를 나타내는 애니메이션|
+|UTextBlock*|PersonText|현재 게임의 남은 인원수를 나타내는 텍스트|
+|UTextBlock*|KillText|자신의 캐릭터가 킬한 인원수를 나타내는 텍스트|
+|UTextBlock*|RingTime|현재 자기장이 줄어들 때까지의 시간을 나타내는 텍스트|
+|UVerticalBox*|VerticalBox_0|킬로그를 나타낼 VerticalBox|
+|UTextBlock*|BulletText|현재 총알수를 나타내는 텍스트|
   
 ### 5) 오브젝트 이름: SWeapon
   
@@ -265,6 +281,12 @@ Bgm은 평활운 느낌으로 나무가 흔들리는 소리나 새가 지저귀�
 |TArray<ASCharacter*>|Characters|게임의 모든 플레이어들(Room안의)을 관리하는 배열|
 |TArray<ASWeapon*>|Guns|게임의 모든 총들을 관리하는 배열|
 |ASWeapon|TargetGun|다른 유저가 총을 획득했을 때 대상이 되는 총의 정보|
+|ASCharacter*|removeCharacter|소켓과 관련하여 지울 대상이 될 캐릭터를 나타내는 객체|
+|TSubclassOf<UUserWidget>|loadingWidget|로딩 위젯 선택|
+|ULoadingWidget*|loading|로딩 위젯|
+|TArray<FVector>|RoundVector|각 라운드에 해당하는 원의 중심점|
+|FVector|NowRound|현재 라운드에 해당하는 원의 중심점|
+|int|RoundNum|현재 라운드|
 |ClientSocket|Socket|클라이언트 소켓의 싱글턴 객체|
   
 ## 3. 행동
@@ -285,6 +307,21 @@ Bgm은 평활운 느낌으로 나무가 흔들리는 소리나 새가 지저귀�
 |StopFire()|발사 중일 시, 멈춤|
 |CheckMove()|플레이어가 움직였는지 체크(서버로 보낼 목적)|
 |Interact()|맵에 설치된 오브젝트들과 인터렉션|
+|SearchObjects()|맵에 설치된 오브젝트들과 인터렉션하는지 여부를 탐색|
+|OtherPlayerMove()|다른 플레이어가 움직였을 때 이를 반영|
+|SetUIMine()|컨트롤 중인 캐릭터의 UI를 메인으로 설정|
+|SetHPUI()|HP가 변했을 때 이를 UI에 반영|
+|SetDie()|플레이어가 죽었을 때 이를 처리|
+|SetGameOver()|게임오버를 설정|
+|SetVictory()|게임 승리를 설정|
+|SetGameInfoUI()|킬이 발생했을 때 이를 UI에 반영|
+|Attack()|근접공격을 수행|
+|PlayAttack()|근접공격 애니메이션을 실행|
+|AddSlot()|킬로그를 UI에 표시|
+|SetChild()|킬로그 VerticalBox를 메인 UI에 부착|
+|Equip()|무기를 장착/해제|
+|SetBullet()|남은 총알 개수를 UI에 반영|
+|SetZoneDamage()|플레이어가 자기장에 의해 데미지를 받음|
 |Action()|플레이어가 액션으로 상대방을 공격|
 
 ### 2) 오브젝트 이름: LoginWidget / WBP_Login
@@ -299,6 +336,12 @@ Bgm은 평활운 느낌으로 나무가 흔들리는 소리나 새가 지저귀�
 |행동|설명|
 |------|---|
 |ShowInteractText()|인터렉션 가능한 상황에 텍스트를 보여줌|
+|ShowGameOver()|게임오버 이미지를 띄움|
+|ShowVictory()|승리 이미지를 띄움|
+|SetPersonCount()|남은 인원수의 텍스트를 바꿈|
+|SetKillCount()|자신이 킬한 수의 텍스트를 바꿈|
+|SetBulletValue()|자신의 총알 수의 텍스트를 바꿈|
+|CallDeleFunc_SetRoundTime()|PlayerController부터 델리게이트를 받아 자기장 시간을 설정|
   
 ### 4) 오브젝트 이름: SWeapon
   
@@ -335,6 +378,11 @@ Bgm은 평활운 느낌으로 나무가 흔들리는 소리나 새가 지저귀�
 |WRITE_PU_C2S_MOVE()|플레이어가 움직일 때 움직임 패킷을 만듬|
 |WRITE_PU_C2S_PICKUP_GUN|플레이어가 총을 집었을 때의 패킷을 만듬|
 |WRITE_PU_C2S_SHOOT|플레이어가 총을 발사했을 때의 패킷을 만듬|
+|WRITE_PU_C2S_MELEE_ATTACK|플레이어가 근접공격을 했을 때의 패킷을 만듬|
+|WRITE_PU_C2S_EQUIP_GUN|플레이어가 총을 장착/해제 했을 때의 패킷을 만듬|
+|WRITE_PU_CHANGE_GUN|플레이어가 총을 변경했을 때의 패킷을 만듬|
+|WRITE_PU_SET_USER_POSITION|플레이어가 게임을 처음 시작할 위치를 골랐을 때의 패킷을 만듬|
+|WRITE_PU_C2S_ZONE_DAMAGE|플레이어가 자기장에 의해 데미지를 받았을 때의 패킷을 만듬|
 
 ### 6) 오브젝트 이름: BPlayerController / BP_PlayerController
   
@@ -344,6 +392,10 @@ Bgm은 평활운 느낌으로 나무가 흔들리는 소리나 새가 지저귀�
 |ResetSessionTime()|세션 연장 함수|
 |GetPacket()|패킷을 ClientSocket에서 받아옴|
 |GameStart()|게임 시작할 때 발생하는 함수|
+|SpawnMap()|로그인에 성공하여 로비창을 띄움|
+|SpawnGame()|매칭에 성공하여 게임창을 띄움|
+|CancelLoading()|로딩 창을 지움|
+|SetMyPos()|자신의 시작위치를 정함|
 
 ## 4. 상태
 ### 1) 오브젝트 이름: SCharacter
@@ -357,6 +409,7 @@ Bgm은 평활운 느낌으로 나무가 흔들리는 소리나 새가 지저귀�
 |Idle|Shoot|Mouse Left|
 |Idle|Run Jump|Space Bar & Speed > 10|
 |Idle|hasGun|Get Gun|
+|Idle|EquipGun|Equip Gun|
 
 ## 5. 게임의 규칙
 ### 1) 핵심 규칙
@@ -427,7 +480,8 @@ Bgm은 평활운 느낌으로 나무가 흔들리는 소리나 새가 지저귀�
 36. 로비에서 게임시작으로 넘어갈 때 로딩 화면을 재생한다. 또한, 로딩 화면이 끝나면 시작지점UI가 나와 제한시간 내에 자신이 시작할 위치를 고를 수 있다.(선택하지 않을 경우에는 랜덤위치에서 시작한다)
 37. 맵의 몇가지의 엄폐물이 존재한다.
 38. 엄폐물은 실시간으로 시뮬레이션되며, 총알이나 근접공격으로 공격당할 경우 부서지게된다.
-  
+39. 맵에는 시작할 때부터 자기장이 존재하며 일정 시간주기로 줄어들게 된다.
+40. 해당 자기장의 바깥으로 나가게 되면 데미지를 받게 되며, 시야가 뿌옇게 된다.
   
 ### 사운드
 1. 이동할 때마다 발소리 사운드가 재생된다.
