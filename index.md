@@ -540,3 +540,8 @@ Bgm은 평활운 느낌으로 나무가 흔들리는 소리나 새가 지저귀�
 <img src="./resource/ProcessPlan.png">
   
 <br><br>
+  
+# [주차별 작업내용]
+## 1주차
+<br><br>ㅈㅏㄱ
+<br><br>
