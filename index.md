@@ -589,6 +589,12 @@ Bgm은 평활운 느낌으로 나무가 흔들리는 소리나 새가 지저귀�
     <source src="./resources/3주차-1.mp4" type="video/mp4">
   </video>
 </figure>
+  
+<figure class="video_container">
+  <video controls="true" allowfullscreen="true" poster="keyEvent.png">
+    <source src="./resources/3주차-2.mp4" type="video/mp4">
+  </video>
+</figure>
 
 ### 해당 요구사항
 12. 일반 몸통에 맞추면 20의 데미지가, 머리에 맞추면 2.5배인 50의 데미지가 들어간다.
