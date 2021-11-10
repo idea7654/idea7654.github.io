@@ -586,13 +586,13 @@ Bgm은 평활운 느낌으로 나무가 흔들리는 소리나 새가 지저귀�
 ## 3주차
 <figure class="video_container">
   <video controls="true" allowfullscreen="true" poster="keyEvent.png">
-    <source src="./resources/3주차-1.mp4" type="video/mp4">
+    <source src="https://github.com/idea7654/idea7654.github.io/blob/master/resource/3주차-1.mp4" type="video/mp4">
   </video>
 </figure>
   
 <figure class="video_container">
   <video controls="true" allowfullscreen="true" poster="keyEvent.png">
-    <source src="./resources/3주차-2.mp4" type="video/mp4">
+    <source src="https://github.com/idea7654/idea7654.github.io/blob/master/resource/3주차-2.mp4" type="video/mp4">
   </video>
 </figure>
 
