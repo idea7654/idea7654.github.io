@@ -585,13 +585,13 @@ Bgm은 평활운 느낌으로 나무가 흔들리는 소리나 새가 지저귀�
   
 ## 3주차
 <figure class="video_container">
-  <video controls="true" allowfullscreen="true" poster="keyEvent.png">
+  <video controls="true" allowfullscreen="true" poster="./resource/keyEvent.png">
     <source src="./resource/3Week-1.mp4" type="video/mp4">
   </video>
 </figure>
   
 <figure class="video_container">
-  <video controls="true" allowfullscreen="true" poster="keyEvent.png">
+  <video controls="true" allowfullscreen="true" poster="./resource/keyEvent.png">
     <source src="./resource/3Week-2.mp4" type="video/mp4">
   </video>
 </figure>
