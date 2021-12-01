@@ -662,6 +662,12 @@ Bgm은 평활운 느낌으로 나무가 흔들리는 소리나 새가 지저귀�
 3. 2번의 추가설명으로, 총알을 발사한 클라이언트에서 다른 캐릭터에 명중했다면 자신과 상대의 정보 + 맞은 위치를 서버로 보내어 서버에서 HP 계산을 담당한다. - 100%
   
 ## 6주차
+  
+<figure class="video_container">
+  <video controls="true" allowfullscreen="true" poster="./resource/keyEvent.png">
+    <source src="./resource/6Week.mp4" type="video/mp4">
+  </video>
+</figure>
 
 ### 해당 요구사항
   
